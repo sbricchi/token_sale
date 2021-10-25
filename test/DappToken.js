@@ -139,9 +139,6 @@ contract('DappToken', function(accounts) { // Ganache nos envía las cuentas
             assert.equal(allowance.toNumber(), 0, 'deduce el monto del aprobado');
         });
     }); //it
-
-    
-    
     
     //region Privadas
     function printBalance(accountIndex, accounts, smartContractInstance) {
