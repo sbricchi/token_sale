@@ -43,3 +43,12 @@ const ethProvider = new web3(web3.givenProvider).eth;
 const accounts = await ethProvider.requestAccounts();
 const ethBalance = web3.utils.fromWei(await ethProvider.getBalance(accounts[0]), 'ether');
 console.log(ethBalance);
+
+
+
+// PARTE 4.
+// Initial coin offering. Provisionar de tokens al nuevo SC de ventas.
+// Darle un precio al token en WEI
+// Asignar un administrador (puede finalizar la venta)
+// Comprar TOKENS
+// Finalizar la venta (inicial?)

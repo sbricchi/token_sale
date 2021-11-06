@@ -14,6 +14,10 @@ Correr tests:
 
 truffle test
 
+Instalar SC desde cero:
+
+truffle migrate --reset 
+
 Consola de truffle:
 
 tuffle console
@@ -41,8 +45,6 @@ Ejemplo:
 web3.eth.getAccounts() (Nos muestra las cuentas)
 La primera:
 web3.eth.getAccounts((error,result) => { if (error) { console.log(error); } else { console.log('SAB -> ' + result[0]); }});
-
-
 
 Publicar proyecto en ganache:
 - truffle migrate --reset
