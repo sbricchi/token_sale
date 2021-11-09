@@ -2,6 +2,7 @@
 var DappToken = artifacts.require("../contracts/DappToken.sol");
 var DappTokenSale = artifacts.require("../contracts/DappTokenSale.sol");
 
+               //function (deployer, network, accounts)
 module.exports = function (deployer) {
   deployer.deploy(DappToken, 1_000_000) // Balance inicial que tendrá la cuenta MADRE del Smart Contract
   .then(() => {
@@ -11,5 +12,6 @@ module.exports = function (deployer) {
 
     // Al SC de venta se le pasa la dirección del SC de tokens en el constructor
     return deployer.deploy(DappTokenSale, DappToken.address, tokenPrice);
+    // https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations
   }); 
 };

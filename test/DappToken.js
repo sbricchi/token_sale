@@ -9,6 +9,7 @@ contract('DappToken', function(accounts) { // Ganache nos envía las cuentas
     it('allocates the contract with the correct values', function() {
         return DappToken.deployed().then(function(instance) {
             tokenInstance = instance;
+            //process.stdout.write('\nDireccion tokenInstance (1): ' + tokenInstance.address);
             return tokenInstance.name();
         }).then(function(name) {
             assert.equal(name, 'DApp Token', 'correct name'); 
@@ -109,7 +110,7 @@ contract('DappToken', function(accounts) { // Ganache nos envía las cuentas
             //process.stdout.write('\nError ' + error.message);
             // Mensaje completo desde el blockchain: "Returned error: VM Exception while processing transaction: revert"
             assert(error.message.indexOf('revert') >= 0, 'No tiene suficiente saldo');
-            // Itenta transferir algo superioir a lo aprobado
+            // Itenta transferir algo superior a lo aprobado
             return tokenInstance.transferFrom(fromAccount, toAccount, 11, { from: spendingAccount }); 
         }).then(assert.fail).catch(function(error) {
             assert(error.message.indexOf('revert') >= 0, 'No se aprobó la transferencia de ese monto');

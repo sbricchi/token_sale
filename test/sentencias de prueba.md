@@ -1,8 +1,12 @@
+DappToken.deployed().then(function(instance) { tokenInstance = instance; })
+DappTokenSale.deployed().then(function(instance) { tokenSaleInstance = instance; })
+
 web3.eth.getAccounts((error,result) => { if (error) { console.log(error); } else { admin = result[0]; }});
 
 // Seteo cuentas inciales (0 y 1 de la blockchain)
 web3.eth.getAccounts((error,result) => admin = result[0]);
 web3.eth.getAccounts((error,result) => receiver = result[1]);
+web3.eth.getAccounts((error,result) => buyer = result[1]);
 
 // Transferencia normal
 tokenInstance.transfer(receiver, 100, { from: admin })
@@ -10,6 +14,7 @@ tokenInstance.transfer(receiver, 100, { from: admin })
 // Chequear balances de 0 y 1
 tokenInstance.balanceOf(admin)
 tokenInstance.balanceOf(receiver)
+tokenInstance.balanceOf(buyer)
 
 
 // Transferencias delegadas:
