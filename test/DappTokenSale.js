@@ -132,6 +132,46 @@ contract('DappTokenSale', function(accounts) {
         });
     });
 
+    it('Finaliza la venta de tokens', () => {
+        return DappToken.deployed().then(instance => {
+            // Obtener primero el SC de tokens
+            tokenInstance = instance;
+            //process.stdout.write('\nDireccion tokenInstance: ' + tokenInstance.address);
+
+            return DappTokenSale.deployed();
+        }).then(instance => {
+            // ahora obtenemos el SC del tokenSale
+            tokenSaleInstance = instance;
+
+            // intentar finalizar la venta con alguien que no sea el admin
+            return tokenSaleInstance.endSale({ from: buyer });
+        }).then(assert.fail).catch(error => {
+            //process.stdout.write('\nError no es el admin:  ' + error.message);
+            assert(error.message.indexOf('revert' >= 0, 'Sólo puede finalizar la venta el admin'));
+
+            // Finalizar la venta como Admin
+            return tokenSaleInstance.endSale({ from : admin });
+        }).then(receipt => {
+
+            // Verificar
+            return tokenInstance.balanceOf(admin);
+        }).then(balance => {
+            // tokens iniciales otorgados a este SC menos los 10 vendidos
+            assert.equal(balance.toNumber(), 999_990, 'tokens no vendidos devueltos al admin');
+
+            // Verificar la desrucción del SC de ventas viendo que alguna de sus 
+            // propiedades están en cero luego de la destrucción
+            return tokenSaleInstance.tokenPrice();
+            //return tokenSaleInstance.tokensSold();
+        //}).then(valor => {
+        }).then(assert.fail).catch(error => {
+            //process.stdout.write('\nError el SC se suicidó!: ' + error.message);
+            //assert.equal(valor.toNumber(), 0, 'El precio de los tokens debe ser reseteado...');
+            //assert.equal(1, 1, 'Algo...');
+            assert(error.message.indexOf('Returned values aren\'t valid' >= 0, 'El SC de venta ya no es accesible'));
+        });
+    });
+
     //region Privadas
 
     async function printSalesBalanceAsync(tokenSmartContractInstance, tokenSalesSmartContractInstance) {

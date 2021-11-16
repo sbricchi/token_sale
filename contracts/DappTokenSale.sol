@@ -55,4 +55,23 @@ contract DappTokenSale {
         // Lanzar evento de venta
         emit Sell(msg.sender, _numberOfTokens);
     }
+
+    // Ending the token sale
+    function endSale() public {
+        
+        // Only admins can do this
+        require(msg.sender == admin);
+
+        // Tranfer remaining token back to admin
+        require(tokenContract.transfer(admin, tokenContract.balanceOf(address(this))));
+
+        // Destroy this contract (selfdestruct or suicide)
+        selfdestruct(payable(admin));
+        /*
+            https://betterprogramming.pub/solidity-what-happens-with-selfdestruct-f337fcaa58a7
+            The wrap up is, selfdestruct is designed to be the extrema ratio for a malfunctioning contract. 
+            It is the emergency button, the SCRAM of your smart contract. 
+            Still, before calling it, consider adding additional logic to, for example, pass control to another smart contract.        
+        */
+    }
 }
