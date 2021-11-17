@@ -1,0 +1,7 @@
+
+{
+    "__comment__": "Configuración BrowserSync - Utilizado por 'lite-server' para exponer los directorios del sitio y Smart Contracts",
+    "server": {
+        "baseDir": ["./src", "./build/contracts"]
+    }
+}
